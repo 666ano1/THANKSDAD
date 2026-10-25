@@ -470,6 +470,14 @@ body { padding-bottom: calc(5.6rem + env(safe-area-inset-bottom, 0px)); }
 .sp-list .nm { font-weight: 700; }
 .sp-list .ds { display: block; color: var(--muted); font-size: 0.9rem; font-weight: 400; line-height: 1.5; }
 .sp-list .am { white-space: nowrap; color: var(--muted); font-variant-numeric: tabular-nums; font-weight: 700; }
+.sp-group { margin-top: 1.2rem; }
+.sp-cat {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
+  padding: 0.55rem 1rem; border-radius: 16px;
+  background: var(--c4-bg); color: var(--c4-fg); font-weight: 800;
+}
+.sp-cat .sub { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.sp-sub { list-style: none; margin: 0; padding: 0 0.4rem 0 0.6rem; }
 .sp-thanks {
   margin-top: 2rem; padding: 1.3rem 1rem; text-align: center;
   background: var(--sakura-bg); border: 2px dashed var(--sakura); border-radius: 24px;
@@ -1081,13 +1089,13 @@ body { padding-bottom: calc(5.6rem + env(safe-area-inset-bottom, 0px)); }
       <p class="amt" id="sp-amt">尚未填入</p>
     </div>
     <p class="load-note" id="note-sponsor" hidden>目前讀不到最新資料，顯示的是上次整理的內容。</p>
-    <ul class="sp-list" id="sp-list">
-      <li><span class="nm">機票<span class="ds">桃園 ⇄ 關西</span></span><span class="am">尚未填入</span></li>
-      <li><span class="nm">住宿<span class="ds">京都、大阪</span></span><span class="am">尚未填入</span></li>
-      <li><span class="nm">交通<span class="ds">Haruka、Rapi:t、地鐵、近鐵</span></span><span class="am">尚未填入</span></li>
-      <li><span class="nm">票券與體驗<span class="ds">teamLab、和服體驗、行李寄放</span></span><span class="am">尚未填入</span></li>
-      <li><span class="nm">吃喝玩樂與購物</span><span class="am">尚未填入</span></li>
-    </ul>
+    <div class="sp-list" id="sp-list">
+      <div class="sp-group"><div class="sp-cat"><span>機票</span><span class="sub">尚未填入</span></div></div>
+      <div class="sp-group"><div class="sp-cat"><span>住宿</span><span class="sub">尚未填入</span></div></div>
+      <div class="sp-group"><div class="sp-cat"><span>交通</span><span class="sub">尚未填入</span></div></div>
+      <div class="sp-group"><div class="sp-cat"><span>票券與體驗</span><span class="sub">尚未填入</span></div></div>
+      <div class="sp-group"><div class="sp-cat"><span>吃喝玩樂與購物</span><span class="sub">尚未填入</span></div></div>
+    </div>
     <p class="sp-thanks">感謝廖爸爸讓廖家成功登陸日本 🇯🇵</p>
   </div>
 </section>
@@ -1382,18 +1390,32 @@ body { padding-bottom: calc(5.6rem + env(safe-area-inset-bottom, 0px)); }
   }
 
   function money(n) { return CURRENCY + ' ' + Math.round(n).toLocaleString('en-US'); }
+  function amountOf(o) {
+    var raw = String(o['金額'] || '').replace(/[^0-9.\-]/g, '');
+    return raw === '' ? NaN : parseFloat(raw);
+  }
   function renderSponsor(items) {
-    items = items.filter(function (o) { return o['項目']; });
+    items = items.filter(function (o) { return o['項目'] || o['說明'] || o['金額']; });
     if (!items.length) return;
-    var total = 0, any = false;
-    var html = items.map(function (o) {
-      var raw = String(o['金額'] || '').replace(/[^0-9.\-]/g, '');
-      var n = raw === '' ? NaN : parseFloat(raw);
-      var amt = isNaN(n) ? '尚未填入' : money(n);
-      if (!isNaN(n)) { total += n; any = true; }
-      return '<li><span class="nm">' + esc(o['項目']) +
-        (o['說明'] ? '<span class="ds">' + esc(o['說明']) + '</span>' : '') +
-        '</span><span class="am">' + amt + '</span></li>';
+    var order = [], groups = {}, total = 0, any = false;
+    items.forEach(function (o) {
+      var c = o['分類'] || '其他';
+      if (!groups[c]) { groups[c] = []; order.push(c); }
+      groups[c].push(o);
+    });
+    var html = order.map(function (c) {
+      var sub = 0, subAny = false;
+      var lis = groups[c].map(function (o) {
+        var n = amountOf(o);
+        if (!isNaN(n)) { sub += n; subAny = true; total += n; any = true; }
+        var name = o['項目'] || o['說明'];
+        var desc = o['項目'] ? o['說明'] : '';
+        return '<li><span class="nm">' + esc(name) +
+          (desc ? '<span class="ds">' + esc(desc) + '</span>' : '') +
+          '</span><span class="am">' + (isNaN(n) ? '尚未填入' : money(n)) + '</span></li>';
+      }).join('');
+      return '<div class="sp-group"><div class="sp-cat"><span>' + esc(c) + '</span><span class="sub">' +
+        (subAny ? money(sub) : '尚未填入') + '</span></div><ul class="sp-sub">' + lis + '</ul></div>';
     }).join('');
     document.getElementById('sp-list').innerHTML = html;
     document.getElementById('sp-amt').textContent = any ? money(total) : '尚未填入';
