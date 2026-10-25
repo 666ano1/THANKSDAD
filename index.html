@@ -400,6 +400,38 @@ body { padding-bottom: calc(5.6rem + env(safe-area-inset-bottom, 0px)); }
 .closing p { margin: 0 0 0.8rem; color: var(--ink); }
 .closing .sig { color: var(--muted); font-size: 0.92rem; font-weight: 700; }
 
+
+/* ---------- Boarding passes ---------- */
+.passes { margin-top: 0.9rem; display: grid; gap: 0.7rem; }
+.pass {
+  position: relative; overflow: hidden;
+  background: var(--surface); border: 2px solid var(--line); border-radius: 24px;
+}
+.pass-head {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.45rem 1.1rem; font-size: 0.92rem; font-weight: 800;
+  background: var(--c3-bg); color: var(--c3-fg);
+}
+.pass.back .pass-head { background: var(--c6-bg); color: var(--c6-fg); }
+.pass-route {
+  display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 0.6rem;
+  padding: 0.9rem 1.1rem 1rem;
+}
+.pass-end { text-align: left; line-height: 1.25; }
+.pass-end.right { text-align: right; }
+.pass-end b { display: block; font-size: 2rem; font-weight: 800; letter-spacing: 0.04em; color: var(--ink); }
+.pass-end span { display: block; font-size: 0.85rem; color: var(--muted); }
+.pass-end time { display: block; margin-top: 0.15rem; font-size: 1.35rem; font-weight: 800; color: var(--brand); font-variant-numeric: tabular-nums; }
+.pass-mid { text-align: center; min-width: 0; }
+.pass-mid .flight {
+  display: inline-block; padding: 0 0.7rem; border-radius: 999px;
+  background: var(--soft); border: 1px solid var(--line);
+  font-size: 0.9rem; font-weight: 800; color: var(--ink);
+}
+.pass-mid .path { display: flex; align-items: center; gap: 0.3rem; margin-top: 0.35rem; color: var(--muted); }
+.pass-mid .path::before, .pass-mid .path::after { content: ""; flex: 1; border-top: 2px dashed var(--line); }
+.pass-mid .path i { font-style: normal; font-size: 1.1rem; }
+
 /* ================= Tickets ================= */
 .tsum { display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 0.9rem 0 0; }
 .chip {
@@ -469,6 +501,7 @@ body { padding-bottom: calc(5.6rem + env(safe-area-inset-bottom, 0px)); }
 }
 .trip-foot { margin-top: 2rem; border-top: 2px dashed var(--line); padding: 1.25rem 0 1rem; color: var(--muted); font-size: 0.92rem; }
 .trip-foot p { margin: 0; }
+.load-note { margin: 0 0 0.8rem; padding: 0.5rem 0.9rem; border-radius: 14px; background: var(--c4-bg); color: var(--c4-fg); font-size: 0.9rem; font-weight: 700; }
 @media print { .tabbar { display: none; } }
 </style>
 <noscript><style>.tab { display: block; }</style></noscript>
@@ -495,6 +528,26 @@ body { padding-bottom: calc(5.6rem + env(safe-area-inset-bottom, 0px)); }
       <p class="count-label">✈️ 距離出發日本還有</p>
       <p class="count-num"><span id="countnum">—</span><small id="countunit">天</small></p>
       <p class="count-note">行李可以晚點整理，<br>期待可以現在開始。</p>
+    </section>
+
+
+    <section class="passes" aria-label="航班資訊">
+      <article class="pass">
+        <div class="pass-head"><span>🛫 去程</span><span>3/4（四）</span></div>
+        <div class="pass-route">
+          <div class="pass-end"><b>TPE</b><span>桃園</span><time>07:40</time></div>
+          <div class="pass-mid"><span class="flight">JX820</span><div class="path" aria-hidden="true"><i>✈️</i></div></div>
+          <div class="pass-end right"><b>KIX</b><span>關西</span><time>11:10</time></div>
+        </div>
+      </article>
+      <article class="pass back">
+        <div class="pass-head"><span>🛬 回程</span><span>3/9（二）</span></div>
+        <div class="pass-route">
+          <div class="pass-end"><b>KIX</b><span>關西</span><time>14:00</time></div>
+          <div class="pass-mid"><span class="flight">JX823</span><div class="path" aria-hidden="true"><i>✈️</i></div></div>
+          <div class="pass-end right"><b>TPE</b><span>桃園</span><time>16:20</time></div>
+        </div>
+      </article>
     </section>
 
     <section class="sec" aria-labelledby="h-days">
@@ -974,12 +1027,13 @@ body { padding-bottom: calc(5.6rem + env(safe-area-inset-bottom, 0px)); }
       <h1 class="serif">🎫 預約票券</h1>
       <p>所有要訂、要買的東西都放在這裡。</p>
       <div class="tsum">
-        <span class="chip done">✅ 已完成 1</span>
-        <span class="chip todo">⏳ 待購買 7</span>
-        <span class="chip soon">📅 尚未開放 0</span>
+        <span class="chip done" id="ts-done">✅ 已完成 1</span>
+        <span class="chip todo" id="ts-todo">⏳ 待購買 7</span>
+        <span class="chip soon" id="ts-soon">📅 尚未開放 0</span>
       </div>
     </div>
-    <ul class="tickets">
+    <p class="load-note" id="note-tickets" hidden>目前讀不到最新資料，顯示的是上次整理的內容。</p>
+    <ul class="tickets" id="ticket-list">
       <li class="ticket done">
         <div class="ticket-top"><span class="ticket-name"><span class="ico" aria-hidden="true">✈️</span>機票　桃園 TPE ⇄ 關西 KIX</span><span class="chip done">✅ 已完成</span></div>
         <p class="ticket-detail">3/4 07:40 去程　3/9 14:00 回程</p>
@@ -1024,9 +1078,10 @@ body { padding-bottom: calc(5.6rem + env(safe-area-inset-bottom, 0px)); }
     </div>
     <div class="sp-total">
       <p class="lab">廖爸爸贊助總額</p>
-      <p class="amt">尚未填入</p>
+      <p class="amt" id="sp-amt">尚未填入</p>
     </div>
-    <ul class="sp-list">
+    <p class="load-note" id="note-sponsor" hidden>目前讀不到最新資料，顯示的是上次整理的內容。</p>
+    <ul class="sp-list" id="sp-list">
       <li><span class="nm">機票<span class="ds">桃園 ⇄ 關西</span></span><span class="am">尚未填入</span></li>
       <li><span class="nm">住宿<span class="ds">京都、大阪</span></span><span class="am">尚未填入</span></li>
       <li><span class="nm">交通<span class="ds">Haruka、Rapi:t、地鐵、近鐵</span></span><span class="am">尚未填入</span></li>
@@ -1043,6 +1098,8 @@ body { padding-bottom: calc(5.6rem + env(safe-area-inset-bottom, 0px)); }
       <h1 class="serif">📍 景點</h1>
       <p>想去的地方都放在這裡。</p>
     </div>
+    <p class="load-note" id="note-spots" hidden>目前讀不到最新資料，顯示的是上次整理的內容。</p>
+    <div id="spot-list">
     <div class="day1">
       <h2 class="spot-city serif">京都</h2>
       <ul class="spots">
@@ -1071,6 +1128,7 @@ body { padding-bottom: calc(5.6rem + env(safe-area-inset-bottom, 0px)); }
         <li class="spot"><span class="spot-name"><span class="ico" aria-hidden="true">🗼</span>通天閣、新世界<span class="spot-note">3/6 行程</span></span><a class="mapbtn" data-q="通天閣" target="_blank" rel="noopener">看地圖</a></li>
         <li class="spot"><span class="spot-name"><span class="ico" aria-hidden="true">🌃</span>道頓堀、心齋橋<span class="spot-note">3/6 行程</span></span><a class="mapbtn" data-q="道頓堀" target="_blank" rel="noopener">看地圖</a></li>
       </ul>
+    </div>
     </div>
     <p class="more-spots">還有想去的地方，都可以加進來 ✨</p>
   </div>
@@ -1228,6 +1286,123 @@ body { padding-bottom: calc(5.6rem + env(safe-area-inset-bottom, 0px)); }
   });
 
   route();
+
+  /* ---------- Data from Google Sheets (published as TSV) ---------- */
+  var SHEET_BASE = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT462f8jyukSHh-OzYQDKoVoRCmp62fQrwMuxVmKbC1K5r_gPlfORGmR7XZihNoG2jQGZ9L4voEvuHp/pub';
+  var SHEETS = {
+    tickets: SHEET_BASE + '?gid=944305464&single=true&output=tsv',
+    spots:   SHEET_BASE + '?gid=603734411&single=true&output=tsv',
+    sponsor: SHEET_BASE + '?gid=1993971509&single=true&output=tsv'
+  };
+  var CURRENCY = 'NT$';
+
+  function esc(v) {
+    return String(v == null ? '' : v).replace(/[&<>"']/g, function (c) {
+      return {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c];
+    });
+  }
+  function parseTSV(t) {
+    var rows = [], row = [], f = '', q = false, i, c;
+    for (i = 0; i < t.length; i++) {
+      c = t.charAt(i);
+      if (q) {
+        if (c === '"') { if (t.charAt(i + 1) === '"') { f += '"'; i++; } else { q = false; } }
+        else { f += c; }
+      } else if (c === '"' && f === '') { q = true; }
+      else if (c === '\t') { row.push(f); f = ''; }
+      else if (c === '\n' || c === '\r') {
+        if (c === '\r' && t.charAt(i + 1) === '\n') i++;
+        row.push(f); rows.push(row); row = []; f = '';
+      } else { f += c; }
+    }
+    if (f !== '' || row.length) { row.push(f); rows.push(row); }
+    return rows;
+  }
+  function toObjects(rows) {
+    if (!rows.length) return [];
+    var head = rows[0].map(function (h) { return h.trim(); });
+    return rows.slice(1).map(function (r) {
+      var o = {};
+      head.forEach(function (h, i) { if (h) o[h] = (r[i] || '').trim(); });
+      return o;
+    });
+  }
+  function load(key) {
+    return fetch(SHEETS[key], { cache: 'no-store' }).then(function (r) {
+      if (!r.ok) throw new Error('bad status');
+      return r.text();
+    }).then(function (t) { return toObjects(parseTSV(t)); });
+  }
+  function fail(key) { var n = document.getElementById('note-' + key); if (n) n.hidden = false; }
+
+  function renderTickets(items) {
+    items = items.filter(function (o) { return o['項目']; });
+    if (!items.length) return;
+    var cnt = { done: 0, todo: 0, soon: 0 };
+    var label = { done: '✅ 已完成', todo: '⏳ 待購買', soon: '📅 尚未開放' };
+    var html = items.map(function (o) {
+      var st = o['狀態'] || '';
+      var k = st.indexOf('已完成') > -1 ? 'done' : (st.indexOf('尚未開放') > -1 ? 'soon' : 'todo');
+      cnt[k]++;
+      return '<li class="ticket ' + k + '"><div class="ticket-top"><span class="ticket-name">' +
+        (o['圖示'] ? '<span class="ico" aria-hidden="true">' + esc(o['圖示']) + '</span>' : '') + esc(o['項目']) +
+        '</span><span class="chip ' + k + '">' + label[k] + '</span></div>' +
+        (o['說明'] ? '<p class="ticket-detail">' + esc(o['說明']) + '</p>' : '') + '</li>';
+    }).join('');
+    document.getElementById('ticket-list').innerHTML = html;
+    document.getElementById('ts-done').textContent = label.done + ' ' + cnt.done;
+    document.getElementById('ts-todo').textContent = label.todo + ' ' + cnt.todo;
+    document.getElementById('ts-soon').textContent = label.soon + ' ' + cnt.soon;
+  }
+
+  function renderSpots(items) {
+    items = items.filter(function (o) { return o['景點']; });
+    if (!items.length) return;
+    var known = { '京都': 'day1', '奈良': 'day4', '大阪': 'day3' };
+    var spare = ['day5', 'day6', 'day2'], si = 0;
+    var order = [], groups = {};
+    items.forEach(function (o) {
+      var c = o['城市'] || '其他';
+      if (!groups[c]) { groups[c] = []; order.push(c); }
+      groups[c].push(o);
+    });
+    var html = order.map(function (c) {
+      var cls = known[c] || spare[si++ % spare.length];
+      var lis = groups[c].map(function (o) {
+        var q = o['地圖搜尋字'] || o['景點'];
+        return '<li class="spot"><span class="spot-name">' +
+          (o['圖示'] ? '<span class="ico" aria-hidden="true">' + esc(o['圖示']) + '</span>' : '') + esc(o['景點']) +
+          (o['備註'] ? '<span class="spot-note">' + esc(o['備註']) + '</span>' : '') +
+          '</span><a class="mapbtn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=' +
+          encodeURIComponent(q) + '">看地圖</a></li>';
+      }).join('');
+      return '<div class="' + cls + '"><h2 class="spot-city serif">' + esc(c) + '</h2><ul class="spots">' + lis + '</ul></div>';
+    }).join('');
+    document.getElementById('spot-list').innerHTML = html;
+  }
+
+  function money(n) { return CURRENCY + ' ' + Math.round(n).toLocaleString('en-US'); }
+  function renderSponsor(items) {
+    items = items.filter(function (o) { return o['項目']; });
+    if (!items.length) return;
+    var total = 0, any = false;
+    var html = items.map(function (o) {
+      var raw = String(o['金額'] || '').replace(/[^0-9.\-]/g, '');
+      var n = raw === '' ? NaN : parseFloat(raw);
+      var amt = isNaN(n) ? '尚未填入' : money(n);
+      if (!isNaN(n)) { total += n; any = true; }
+      return '<li><span class="nm">' + esc(o['項目']) +
+        (o['說明'] ? '<span class="ds">' + esc(o['說明']) + '</span>' : '') +
+        '</span><span class="am">' + amt + '</span></li>';
+    }).join('');
+    document.getElementById('sp-list').innerHTML = html;
+    document.getElementById('sp-amt').textContent = any ? money(total) : '尚未填入';
+  }
+
+  load('tickets').then(renderTickets).catch(function () { fail('tickets'); });
+  load('spots').then(renderSpots).catch(function () { fail('spots'); });
+  load('sponsor').then(renderSponsor).catch(function () { fail('sponsor'); });
+
 })();
 </script>
 </body>
