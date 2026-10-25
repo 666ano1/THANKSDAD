@@ -503,6 +503,13 @@ body { padding-bottom: calc(5.6rem + env(safe-area-inset-bottom, 0px)); }
   text-decoration: none; font-size: 0.9rem; font-weight: 700;
 }
 .spot a.mapbtn:hover { background: var(--dbg); }
+.spot-links { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.45rem; }
+.linkbtn {
+  display: inline-flex; align-items: center; min-height: 36px; padding: 0.1rem 0.8rem;
+  border-radius: 999px; background: var(--dbg); color: var(--dfg);
+  font-size: 0.85rem; font-weight: 700; text-decoration: none;
+}
+.linkbtn:hover { opacity: 0.85; }
 .more-spots {
   margin-top: 1.5rem; padding: 1rem; text-align: center; color: var(--muted);
   border: 2px dashed var(--line); border-radius: 20px;
@@ -1378,9 +1385,16 @@ body { padding-bottom: calc(5.6rem + env(safe-area-inset-bottom, 0px)); }
       var cls = known[c] || spare[si++ % spare.length];
       var lis = groups[c].map(function (o) {
         var q = o['地圖搜尋字'] || o['景點'];
+        var urls = String(o['連結'] || '').match(/https?:\/\/[^\s,，、]+/g) || [];
+        var links = urls.map(function (u) {
+          var label = /xiaohongshu\.com|xhslink\.com/i.test(u) ? '📕 小紅書' :
+                      (/instagram\.com|instagr\.am/i.test(u) ? '📷 IG' : '🔗 連結');
+          return '<a class="linkbtn" target="_blank" rel="noopener" href="' + esc(u) + '">' + label + '</a>';
+        }).join('');
         return '<li class="spot"><span class="spot-name">' +
           (o['圖示'] ? '<span class="ico" aria-hidden="true">' + esc(o['圖示']) + '</span>' : '') + esc(o['景點']) +
           (o['備註'] ? '<span class="spot-note">' + esc(o['備註']) + '</span>' : '') +
+          (links ? '<span class="spot-links">' + links + '</span>' : '') +
           '</span><a class="mapbtn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=' +
           encodeURIComponent(q) + '">看地圖</a></li>';
       }).join('');
