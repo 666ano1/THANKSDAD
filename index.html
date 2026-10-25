@@ -2,13 +2,13 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;800&display=swap">
-<title>🇯🇵 2027 京都＋大阪 6天5夜</title>
+<title>廖家の京都大阪六天五夜</title>
 <style>
 :root {
   --paper: #FFFAFB;
@@ -303,23 +303,241 @@ footer .wrap { border-top: 2px dashed var(--line); padding-top: 1.25rem; }
 @media print {
   .daynav, .btn, .fab { display: none; }
 }
+
+/* ================= Tabs ================= */
+.tab { display: none; }
+.tab.active { display: block; }
+body { padding-bottom: calc(5.6rem + env(safe-area-inset-bottom, 0px)); }
+.tabbar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
+  background: var(--paper); border-top: 1px solid var(--line);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.tabbar ul { list-style: none; margin: 0 auto; padding: 0.35rem 0.5rem; max-width: 680px; display: flex; gap: 0.15rem; }
+.tabbar li { flex: 1; }
+.tabbar a {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: 56px; border-radius: 16px;
+  color: var(--muted); text-decoration: none;
+  font-size: 0.72rem; font-weight: 700; line-height: 1.25;
+}
+.tabbar a .ti { font-size: 1.35rem; line-height: 1.2; }
+.tabbar a[aria-current="page"] { background: var(--sakura-bg); color: var(--brand); }
+.fab { bottom: calc(5.4rem + env(safe-area-inset-bottom, 0px)); }
+
+.page-head { padding: 2.25rem 0 1rem; }
+.page-head h1 { margin: 0 0 0.4rem; font-size: 1.6rem; line-height: 1.3; color: var(--brand); }
+.page-head p { margin: 0; color: var(--muted); }
+
+/* ================= Home ================= */
+.hero-sub { font-size: 1.15rem; font-weight: 700; margin: 0 0 0.9rem; }
+.hero-blurb { margin: 0 0 1.1rem; font-size: 1.05rem; color: var(--ink); }
+.facts { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.45rem; align-items: flex-start; }
+.facts li {
+  background: var(--surface); border: 2px solid var(--line); border-radius: 999px;
+  padding: 0.2rem 1rem; font-weight: 700; font-size: 0.98rem;
+}
+
+.count {
+  margin: 1.5rem 0 0; padding: 1.4rem 1rem 1.3rem; text-align: center;
+  background: var(--c3-bg); border-radius: 28px;
+}
+.count-label { margin: 0; color: var(--c3-fg); font-weight: 700; }
+.count-num { margin: 0.1rem 0 0.2rem; font-size: 3.6rem; line-height: 1.2; font-weight: 800; color: var(--c3-fg); }
+.count-num small { font-size: 1.4rem; font-weight: 700; margin-left: 0.2rem; }
+.count-note { margin: 0; color: var(--ink); font-size: 0.97rem; }
+
+.sec { padding: 2.25rem 0 0.25rem; }
+.sec h2 { margin: 0 0 0.8rem; font-size: 1.35rem; color: var(--brand); }
+.dayrows { list-style: none; margin: 0; padding: 0; }
+.dayrows li { margin-bottom: 0.6rem; }
+.dayrows a {
+  display: grid; grid-template-columns: 3.6rem 1fr; gap: 0.9rem; align-items: center;
+  padding: 0.65rem 1rem 0.65rem 0.7rem;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 20px;
+  color: var(--ink); text-decoration: none;
+}
+.dayrows a:hover { background: var(--soft); }
+.dayrows .dd {
+  width: 3.6rem; height: 3.6rem; border-radius: 50%;
+  display: grid; place-items: center; font-size: 1.02rem; font-weight: 800; line-height: 1;
+}
+.dayrows li:nth-child(1) .dd { background: var(--c1-bg); color: var(--c1-fg); }
+.dayrows li:nth-child(2) .dd { background: var(--c2-bg); color: var(--c2-fg); }
+.dayrows li:nth-child(3) .dd { background: var(--c3-bg); color: var(--c3-fg); }
+.dayrows li:nth-child(4) .dd { background: var(--c4-bg); color: var(--c4-fg); }
+.dayrows li:nth-child(5) .dd { background: var(--c5-bg); color: var(--c5-fg); }
+.dayrows li:nth-child(6) .dd { background: var(--c6-bg); color: var(--c6-fg); }
+.dayrows .dt { font-weight: 700; display: block; line-height: 1.4; }
+.dayrows .ds { color: var(--muted); font-size: 0.95rem; display: block; line-height: 1.5; }
+
+.members { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.7rem; }
+.member {
+  display: grid; grid-template-columns: 3.2rem 1fr; gap: 0.9rem; align-items: start;
+  padding: 0.9rem 1rem; background: var(--surface); border: 1px solid var(--line); border-radius: 20px;
+}
+.member .em {
+  width: 3.2rem; height: 3.2rem; border-radius: 50%; display: grid; place-items: center;
+  font-size: 1.7rem; background: var(--soft);
+}
+.member:nth-child(1) .em { background: var(--c4-bg); }
+.member:nth-child(2) .em { background: var(--c1-bg); }
+.member:nth-child(3) .em { background: var(--c3-bg); }
+.member:nth-child(4) .em { background: var(--c6-bg); }
+.member b { display: block; line-height: 1.4; }
+.member .role { color: var(--brand); font-weight: 700; font-size: 0.95rem; display: block; }
+.member p { margin: 0.2rem 0 0; color: var(--muted); font-size: 0.95rem; line-height: 1.6; }
+
+.thanks {
+  margin-top: 2.25rem; padding: 1.6rem 1.2rem; text-align: center;
+  background: var(--sakura-bg); border: 2px dashed var(--sakura); border-radius: 28px;
+}
+.thanks h2 { margin: 0 0 0.6rem; font-size: 1.3rem; color: var(--brand); }
+.thanks .big { font-size: 1.7rem; font-weight: 800; color: var(--brand); margin: 0.2rem 0; line-height: 1.4; }
+.thanks p { margin: 0.4rem 0; }
+.closing { padding: 2.5rem 0 1rem; text-align: center; }
+.closing h2 { font-size: 1.4rem; margin: 0 0 0.6rem; color: var(--brand); }
+.closing p { margin: 0 0 0.8rem; color: var(--ink); }
+.closing .sig { color: var(--muted); font-size: 0.92rem; font-weight: 700; }
+
+/* ================= Tickets ================= */
+.tsum { display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 0.9rem 0 0; }
+.chip {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  padding: 0.1rem 0.8rem; border-radius: 999px;
+  font-size: 0.9rem; font-weight: 700; white-space: nowrap;
+}
+.chip.done { background: var(--c2-bg); color: var(--c2-fg); }
+.chip.todo { background: var(--c4-bg); color: var(--c4-fg); }
+.chip.soon { background: var(--c3-bg); color: var(--c3-fg); }
+.tickets { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.7rem; }
+.ticket {
+  padding: 0.9rem 1rem; background: var(--surface); border: 1px solid var(--line); border-radius: 20px;
+  border-left-width: 6px;
+}
+.ticket.done { border-left-color: var(--c2-ac); }
+.ticket.todo { border-left-color: var(--c4-ac); }
+.ticket.soon { border-left-color: var(--c3-ac); }
+.ticket-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.6rem; }
+.ticket-name { font-weight: 700; line-height: 1.45; }
+.ticket-name .ico { margin-right: 0.3rem; }
+.ticket-detail { margin: 0.25rem 0 0; color: var(--muted); font-size: 0.95rem; line-height: 1.6; }
+
+/* ================= Sponsor ================= */
+.sp-total {
+  margin: 0.5rem 0 1.25rem; padding: 1.4rem 1rem; text-align: center;
+  background: var(--c4-bg); border-radius: 28px;
+}
+.sp-total .lab { margin: 0; color: var(--c4-fg); font-weight: 700; }
+.sp-total .amt { margin: 0.1rem 0 0; font-size: 2.4rem; font-weight: 800; color: var(--c4-fg); line-height: 1.3; }
+.sp-list { list-style: none; margin: 0; padding: 0; }
+.sp-list li {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
+  padding: 0.8rem 0; border-bottom: 2px dashed var(--line);
+}
+.sp-list .nm { font-weight: 700; }
+.sp-list .ds { display: block; color: var(--muted); font-size: 0.9rem; font-weight: 400; line-height: 1.5; }
+.sp-list .am { white-space: nowrap; color: var(--muted); font-variant-numeric: tabular-nums; font-weight: 700; }
+.sp-thanks {
+  margin-top: 2rem; padding: 1.3rem 1rem; text-align: center;
+  background: var(--sakura-bg); border: 2px dashed var(--sakura); border-radius: 24px;
+  font-size: 1.1rem; font-weight: 800; color: var(--brand); line-height: 1.6;
+}
+
+/* ================= Spots ================= */
+.spot-city { margin: 1.75rem 0 0.7rem; font-size: 1.15rem; display: flex; align-items: center; gap: 0.5rem; }
+.spot-city::before { content: ""; width: 14px; height: 14px; border-radius: 50%; background: var(--dac); }
+.spots { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.6rem; }
+.spot {
+  display: flex; align-items: center; gap: 0.8rem; justify-content: space-between;
+  padding: 0.7rem 0.9rem 0.7rem 1rem; background: var(--surface);
+  border: 1px solid var(--line); border-radius: 20px;
+}
+.spot-name { font-weight: 700; line-height: 1.4; }
+.spot-name .ico { margin-right: 0.3rem; }
+.spot-note { display: block; margin-top: 0.15rem; font-size: 0.85rem; font-weight: 700; color: var(--dfg); }
+.spot a.mapbtn {
+  flex: none; min-height: 44px; padding: 0.4rem 0.95rem;
+  display: inline-flex; align-items: center;
+  border: 2px solid var(--dfg); color: var(--dfg); border-radius: 999px;
+  text-decoration: none; font-size: 0.9rem; font-weight: 700;
+}
+.spot a.mapbtn:hover { background: var(--dbg); }
+.more-spots {
+  margin-top: 1.5rem; padding: 1rem; text-align: center; color: var(--muted);
+  border: 2px dashed var(--line); border-radius: 20px;
+}
+.trip-foot { margin-top: 2rem; border-top: 2px dashed var(--line); padding: 1.25rem 0 1rem; color: var(--muted); font-size: 0.92rem; }
+.trip-foot p { margin: 0; }
+@media print { .tabbar { display: none; } }
 </style>
+<noscript><style>.tab { display: block; }</style></noscript>
 </head>
 <body>
-
-<header class="hero">
-  <span class="petal p1" aria-hidden="true"></span><span class="petal p2" aria-hidden="true"></span><span class="petal p3" aria-hidden="true"></span>
-  <div class="wrap">
-    <h1 class="hero-title serif">🇯🇵 2027<br>京都＋大阪<br>6天5夜</h1>
-    <div class="hero-text">
-      <p class="hero-dates serif">3月4日至9日</p>
-      <p>從關西機場出發，前兩天在京都，之後住大阪，中間去一天奈良。</p>
-      <p>每一站都附上時間和交通方式，有地址的地方可以直接複製，或開地圖導航。</p>
+<main>
+<section class="tab" id="tab-home" aria-label="首頁">
+  <header class="hero">
+    <span class="petal p1" aria-hidden="true"></span><span class="petal p2" aria-hidden="true"></span><span class="petal p3" aria-hidden="true"></span>
+    <div class="wrap">
+      <h1 class="hero-title serif">🇯🇵 廖家の<br>京都大阪<br>六天五夜</h1>
+      <p class="hero-sub">2027 廖家日本家庭旅行</p>
+      <p class="hero-blurb">京都走到腿軟，大阪吃到肚子撐，<br>小孩負責玩，大人負責拍照——<br>廖爸爸負責付錢。💸</p>
+      <ul class="facts">
+        <li>📅 2027年3月4日 ～ 3月9日</li>
+        <li>📍 京都・大阪・奈良</li>
+        <li>👨‍👩‍👧‍👦 四大一小，六天五夜</li>
+      </ul>
     </div>
-  </div>
-</header>
+  </header>
 
-<nav class="daynav" aria-label="行程日期">
+  <div class="wrap">
+    <section class="count" aria-live="polite">
+      <p class="count-label">✈️ 距離出發日本還有</p>
+      <p class="count-num"><span id="countnum">—</span><small id="countunit">天</small></p>
+      <p class="count-note">行李可以晚點整理，<br>期待可以現在開始。</p>
+    </section>
+
+    <section class="sec" aria-labelledby="h-days">
+      <h2 id="h-days" class="serif">🗓️ 我們的六天五夜</h2>
+      <ol class="dayrows">
+        <li><a href="#d1"><span class="dd">3/4</span><span><span class="dt">第一天｜出發！前往京都</span><span class="ds">抵達日本，廖家旅行正式開始 🇯🇵</span></span></a></li>
+        <li><a href="#d2"><span class="dd">3/5</span><span><span class="dt">第二天｜京都的一天</span><span class="ds">穿上和服，一起留下京都的回憶 👘</span></span></a></li>
+        <li><a href="#d3"><span class="dd">3/6</span><span><span class="dt">第三天｜京都 → 大阪</span><span class="ds">告別京都，前往大阪繼續吃喝玩樂！</span></span></a></li>
+        <li><a href="#d4"><span class="dd">3/7</span><span><span class="dt">第四天｜奈良小旅行</span><span class="ds">今天換小鹿當主角 🦌</span></span></a></li>
+        <li><a href="#d5"><span class="dd">3/8</span><span><span class="dt">第五天｜大阪的一天</span><span class="ds">逛街、吃美食、買東西，最後一天好好玩！</span></span></a></li>
+        <li><a href="#d6"><span class="dd">3/9</span><span><span class="dt">第六天｜回家啦 ✈️</span><span class="ds">最後吃一輪、買一輪，帶著滿滿戰利品回台灣。</span></span></a></li>
+      </ol>
+    </section>
+
+    <section class="sec" aria-labelledby="h-members">
+      <h2 id="h-members" class="serif">👨‍👩‍👧‍👦 廖家旅遊成員</h2>
+      <ul class="members">
+        <li class="member"><span class="em" aria-hidden="true">👨</span><div><b>廖爸爸</b><span class="role">本趟最大股東</span><p>主要任務：開心出國，以及負責本趟旅費 💰</p></div></li>
+        <li class="member"><span class="em" aria-hidden="true">👩</span><div><b>媽媽</b><span class="role">快樂旅客</span><p>主要任務：吃好、玩好、拍漂亮。</p></div></li>
+        <li class="member"><span class="em" aria-hidden="true">👨‍👩‍👧</span><div><b>我們</b><span class="role">行程執行組</span><p>主要任務：查交通、排行程、帶小孩，以及努力不要迷路。</p></div></li>
+        <li class="member"><span class="em" aria-hidden="true">👧</span><div><b>本團最小旅客</b><p>主要任務：吃、玩、睡，以及負責可愛。</p></div></li>
+      </ul>
+    </section>
+
+    <section class="thanks" aria-labelledby="h-thanks">
+      <h2 id="h-thanks" class="serif">💰 特別感謝</h2>
+      <p>本趟旅程由</p>
+      <p class="big">❤️ 廖爸爸 ❤️</p>
+      <p>榮譽贊助</p>
+      <p>感謝廖爸爸慷慨贊助<br>廖家京都・大阪六天五夜家庭旅行！</p>
+      <p>沒有爸爸的贊助，<br>我們可能還在台灣看日本旅遊影片。🤣</p>
+    </section>
+
+    <section class="closing">
+      <h2 class="serif">🇯🇵 2027，一起去日本吧！</h2>
+      <p>六天五夜，也許很快就過去了，<br>但一家人一起旅行的回憶，可以留很久。</p>
+      <p class="sig">廖家日本家庭旅行｜2027.03.04 — 03.09</p>
+    </section>
+  </div>
+</section>
+
+<section class="tab" id="tab-trip" aria-label="六天行程">
+  <nav class="daynav" aria-label="行程日期">
   <ul>
     <li><a href="#d1">3/4<small>京都</small></a></li>
     <li><a href="#d2">3/5<small>京都</small></a></li>
@@ -329,21 +547,7 @@ footer .wrap { border-top: 2px dashed var(--line); padding-top: 1.25rem; }
     <li><a href="#d6">3/9<small>回程</small></a></li>
   </ul>
 </nav>
-
-<main class="wrap">
-
-  <section class="overview" aria-labelledby="ov-h">
-    <h2 id="ov-h" class="serif">六天總覽</h2>
-    <ol>
-      <li><a href="#d1"><span class="ov-date serif">3/4</span><span><span class="ov-city">京都</span><span class="ov-spots">抵達關西機場、御金神社、teamLab</span></span></a></li>
-      <li><a href="#d2"><span class="ov-date serif">3/5</span><span><span class="ov-city">京都</span><span class="ov-spots">穿和服、清水寺、伏見稻荷</span></span></a></li>
-      <li><a href="#d3"><span class="ov-date serif">3/6</span><span><span class="ov-city">京都到大阪</span><span class="ov-spots">大阪城、梅田、新世界、道頓堀</span></span></a></li>
-      <li><a href="#d4"><span class="ov-date serif">3/7</span><span><span class="ov-city">奈良</span><span class="ov-spots">春日大社、奈良公園、東大寺、中谷堂</span></span></a></li>
-      <li><a href="#d5"><span class="ov-date serif">3/8</span><span><span class="ov-city">大阪</span><span class="ov-spots">自由安排</span></span></a></li>
-      <li><a href="#d6"><span class="ov-date serif">3/9</span><span><span class="ov-city">回程</span><span class="ov-spots">搭 Rapi:t 到機場，14:00 起飛</span></span></a></li>
-    </ol>
-  </section>
-
+  <div class="wrap">
   <section class="keyinfo" aria-labelledby="ki-h">
     <h2 id="ki-h" class="serif">重要資訊</h2>
 
@@ -757,19 +961,139 @@ footer .wrap { border-top: 2px dashed var(--line); padding-top: 1.25rem; }
     </ol>
   </section>
 
+
+    <footer class="trip-foot">
+      <p>出發前再確認一次 Haruka 車票和 teamLab 的入場時段。行程時間是預估，實際以當天狀況為主。</p>
+    </footer>
+  </div>
+</section>
+
+<section class="tab" id="tab-tickets" aria-label="預約票券">
+  <div class="wrap">
+    <div class="page-head">
+      <h1 class="serif">🎫 預約票券</h1>
+      <p>所有要訂、要買的東西都放在這裡。</p>
+      <div class="tsum">
+        <span class="chip done">✅ 已完成 1</span>
+        <span class="chip todo">⏳ 待購買 7</span>
+        <span class="chip soon">📅 尚未開放 0</span>
+      </div>
+    </div>
+    <ul class="tickets">
+      <li class="ticket done">
+        <div class="ticket-top"><span class="ticket-name"><span class="ico" aria-hidden="true">✈️</span>機票　桃園 TPE ⇄ 關西 KIX</span><span class="chip done">✅ 已完成</span></div>
+        <p class="ticket-detail">3/4 07:40 去程　3/9 14:00 回程</p>
+      </li>
+      <li class="ticket todo">
+        <div class="ticket-top"><span class="ticket-name"><span class="ico" aria-hidden="true">🏨</span>京都住宿</span><span class="chip todo">⏳ 待購買</span></div>
+        <p class="ticket-detail">3/4 入住　3/6 早上退房</p>
+      </li>
+      <li class="ticket todo">
+        <div class="ticket-top"><span class="ticket-name"><span class="ico" aria-hidden="true">🏨</span>KAMON HOTEL Namba</span><span class="chip todo">⏳ 待購買</span></div>
+        <p class="ticket-detail">3/6 入住　3/9 早上退房</p>
+      </li>
+      <li class="ticket todo">
+        <div class="ticket-top"><span class="ticket-name"><span class="ico" aria-hidden="true">🧳</span>關西機場行李寄放（JALABC 櫃檯）</span><span class="chip todo">⏳ 待購買</span></div>
+        <p class="ticket-detail">3/4　12:45 前到櫃檯，13:00 截止</p>
+      </li>
+      <li class="ticket todo">
+        <div class="ticket-top"><span class="ticket-name"><span class="ico" aria-hidden="true">🚆</span>JR Haruka　關西機場 → 京都</span><span class="chip todo">⏳ 待購買</span></div>
+        <p class="ticket-detail">3/4　13:14 發車（備案 13:44）</p>
+      </li>
+      <li class="ticket todo">
+        <div class="ticket-top"><span class="ticket-name"><span class="ico" aria-hidden="true">🎨</span>teamLab Biovortex Kyoto</span><span class="chip todo">⏳ 待購買</span></div>
+        <p class="ticket-detail">3/4　16:30 入場</p>
+      </li>
+      <li class="ticket todo">
+        <div class="ticket-top"><span class="ticket-name"><span class="ico" aria-hidden="true">👘</span>Ookini 和服體驗</span><span class="chip todo">⏳ 待購買</span></div>
+        <p class="ticket-detail">3/5　清水寺店 08:30 取，祇園店 17:00 還</p>
+      </li>
+      <li class="ticket todo">
+        <div class="ticket-top"><span class="ticket-name"><span class="ico" aria-hidden="true">🚆</span>南海 Rapi:t　難波 → 關西機場</span><span class="chip todo">⏳ 待購買</span></div>
+        <p class="ticket-detail">3/9　指定席</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="tab" id="tab-sponsor" aria-label="爸爸贊助">
+  <div class="wrap">
+    <div class="page-head">
+      <h1 class="serif">💰 爸爸贊助</h1>
+      <p>廖爸爸榮譽贊助的旅費明細。</p>
+    </div>
+    <div class="sp-total">
+      <p class="lab">廖爸爸贊助總額</p>
+      <p class="amt">尚未填入</p>
+    </div>
+    <ul class="sp-list">
+      <li><span class="nm">機票<span class="ds">桃園 ⇄ 關西</span></span><span class="am">尚未填入</span></li>
+      <li><span class="nm">住宿<span class="ds">京都、大阪</span></span><span class="am">尚未填入</span></li>
+      <li><span class="nm">交通<span class="ds">Haruka、Rapi:t、地鐵、近鐵</span></span><span class="am">尚未填入</span></li>
+      <li><span class="nm">票券與體驗<span class="ds">teamLab、和服體驗、行李寄放</span></span><span class="am">尚未填入</span></li>
+      <li><span class="nm">吃喝玩樂與購物</span><span class="am">尚未填入</span></li>
+    </ul>
+    <p class="sp-thanks">感謝廖爸爸讓廖家成功登陸日本 🇯🇵</p>
+  </div>
+</section>
+
+<section class="tab" id="tab-spots" aria-label="景點">
+  <div class="wrap">
+    <div class="page-head">
+      <h1 class="serif">📍 景點</h1>
+      <p>想去的地方都放在這裡。</p>
+    </div>
+    <div class="day1">
+      <h2 class="spot-city serif">京都</h2>
+      <ul class="spots">
+        <li class="spot"><span class="spot-name"><span class="ico" aria-hidden="true">⛩️</span>御金神社<span class="spot-note">3/4 行程</span></span><a class="mapbtn" data-q="御金神社 京都" target="_blank" rel="noopener">看地圖</a></li>
+        <li class="spot"><span class="spot-name"><span class="ico" aria-hidden="true">🎨</span>teamLab Biovortex Kyoto<span class="spot-note">3/4 行程</span></span><a class="mapbtn" data-q="teamLab Biovortex Kyoto" target="_blank" rel="noopener">看地圖</a></li>
+        <li class="spot"><span class="spot-name"><span class="ico" aria-hidden="true">👘</span>Ookini 清水寺店　穿和服<span class="spot-note">3/5 行程</span></span><a class="mapbtn" data-q="〒605-0864 京都府京都市東山区遊行前町559" target="_blank" rel="noopener">看地圖</a></li>
+        <li class="spot"><span class="spot-name"><span class="ico" aria-hidden="true">🏯</span>清水寺<span class="spot-note">3/5 行程</span></span><a class="mapbtn" data-q="清水寺" target="_blank" rel="noopener">看地圖</a></li>
+        <li class="spot"><span class="spot-name"><span class="ico" aria-hidden="true">🏮</span>三年坂、二年坂、八坂塔<span class="spot-note">3/5 行程</span></span><a class="mapbtn" data-q="八坂の塔 京都" target="_blank" rel="noopener">看地圖</a></li>
+        <li class="spot"><span class="spot-name"><span class="ico" aria-hidden="true">⛩️</span>伏見稻荷大社<span class="spot-note">3/5 行程</span></span><a class="mapbtn" data-q="伏見稲荷大社" target="_blank" rel="noopener">看地圖</a></li>
+      </ul>
+    </div>
+    <div class="day4">
+      <h2 class="spot-city serif">奈良</h2>
+      <ul class="spots">
+        <li class="spot"><span class="spot-name"><span class="ico" aria-hidden="true">⛩️</span>春日大社<span class="spot-note">3/7 行程</span></span><a class="mapbtn" data-q="春日大社" target="_blank" rel="noopener">看地圖</a></li>
+        <li class="spot"><span class="spot-name"><span class="ico" aria-hidden="true">🦌</span>奈良公園<span class="spot-note">3/7 行程</span></span><a class="mapbtn" data-q="奈良公園" target="_blank" rel="noopener">看地圖</a></li>
+        <li class="spot"><span class="spot-name"><span class="ico" aria-hidden="true">🏯</span>東大寺<span class="spot-note">3/7 行程</span></span><a class="mapbtn" data-q="東大寺" target="_blank" rel="noopener">看地圖</a></li>
+        <li class="spot"><span class="spot-name"><span class="ico" aria-hidden="true">🍡</span>中谷堂<span class="spot-note">3/7 行程</span></span><a class="mapbtn" data-q="中谷堂 奈良" target="_blank" rel="noopener">看地圖</a></li>
+      </ul>
+    </div>
+    <div class="day3">
+      <h2 class="spot-city serif">大阪</h2>
+      <ul class="spots">
+        <li class="spot"><span class="spot-name"><span class="ico" aria-hidden="true">🏯</span>大阪城<span class="spot-note">3/6 行程</span></span><a class="mapbtn" data-q="大阪城" target="_blank" rel="noopener">看地圖</a></li>
+        <li class="spot"><span class="spot-name"><span class="ico" aria-hidden="true">🛍️</span>梅田<span class="spot-note">3/6 行程</span></span><a class="mapbtn" data-q="梅田 大阪" target="_blank" rel="noopener">看地圖</a></li>
+        <li class="spot"><span class="spot-name"><span class="ico" aria-hidden="true">🗼</span>通天閣、新世界<span class="spot-note">3/6 行程</span></span><a class="mapbtn" data-q="通天閣" target="_blank" rel="noopener">看地圖</a></li>
+        <li class="spot"><span class="spot-name"><span class="ico" aria-hidden="true">🌃</span>道頓堀、心齋橋<span class="spot-note">3/6 行程</span></span><a class="mapbtn" data-q="道頓堀" target="_blank" rel="noopener">看地圖</a></li>
+      </ul>
+    </div>
+    <p class="more-spots">還有想去的地方，都可以加進來 ✨</p>
+  </div>
+</section>
 </main>
 
-<footer>
-  <div class="wrap">
-    <p>出發前再確認一次 Haruka 車票和 teamLab 的入場時段。行程時間是預估，實際以當天狀況為主。</p>
-  </div>
-</footer>
+<nav class="tabbar" aria-label="主選單">
+  <ul>
+    <li><a href="#home" data-tab="home"><span class="ti" aria-hidden="true">🏠</span>首頁</a></li>
+    <li><a href="#trip" data-tab="trip"><span class="ti" aria-hidden="true">🗓️</span>六天行程</a></li>
+    <li><a href="#tickets" data-tab="tickets"><span class="ti" aria-hidden="true">🎫</span>預約票券</a></li>
+    <li><a href="#sponsor" data-tab="sponsor"><span class="ti" aria-hidden="true">💰</span>爸爸贊助</a></li>
+    <li><a href="#spots" data-tab="spots"><span class="ti" aria-hidden="true">📍</span>景點</a></li>
+  </ul>
+</nav>
 
 <button type="button" class="fab" id="fontbtn" aria-label="調整文字大小">字<small>標準</small></button>
 
 <script>
 (function () {
-  // Text size button: cycles through three sizes
+  var TABS = ['home', 'trip', 'tickets', 'sponsor', 'spots'];
+
+  /* ---------- Text size button ---------- */
   var sizes = [{v: 100, label: '標準'}, {v: 115, label: '大'}, {v: 130, label: '特大'}];
   var idx = 0;
   var btn = document.getElementById('fontbtn');
@@ -783,7 +1107,54 @@ footer .wrap { border-top: 2px dashed var(--line); padding-top: 1.25rem; }
   btn.addEventListener('click', function () { idx = (idx + 1) % sizes.length; applySize(); });
   applySize();
 
-  // Highlight the day currently on screen in the top nav
+  /* ---------- Countdown ---------- */
+  function countdown() {
+    var num = document.getElementById('countnum');
+    var unit = document.getElementById('countunit');
+    var now = new Date();
+    var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    var start = new Date(2027, 2, 4);
+    var end = new Date(2027, 2, 9);
+    var d = Math.round((start - today) / 86400000);
+    if (d > 0) { num.textContent = d; unit.textContent = '天'; }
+    else if (today <= end) { num.textContent = d === 0 ? '今天出發！' : '旅程進行中'; unit.textContent = ''; }
+    else { num.textContent = '歡迎回家'; unit.textContent = ''; }
+  }
+  countdown();
+
+  /* ---------- Map links for spots ---------- */
+  document.querySelectorAll('a.mapbtn').forEach(function (a) {
+    a.href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(a.getAttribute('data-q'));
+  });
+
+  /* ---------- Tabs (hash router) ---------- */
+  var tabLinks = Array.prototype.slice.call(document.querySelectorAll('.tabbar a'));
+  function currentTab() {
+    var el = document.querySelector('.tab.active');
+    return el ? el.id.replace('tab-', '') : 'home';
+  }
+  function route() {
+    var h = location.hash.slice(1);
+    var tab = 'home', day = null;
+    if (/^d[1-6]$/.test(h)) { tab = 'trip'; day = h; }
+    else if (TABS.indexOf(h) > -1) { tab = h; }
+    TABS.forEach(function (t) {
+      document.getElementById('tab-' + t).classList.toggle('active', t === tab);
+    });
+    tabLinks.forEach(function (a) {
+      if (a.getAttribute('data-tab') === tab) a.setAttribute('aria-current', 'page');
+      else a.removeAttribute('aria-current');
+    });
+    if (day) {
+      var el = document.getElementById(day);
+      if (el) el.scrollIntoView({ behavior: 'instant' });
+    } else {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    }
+    updateActive();
+  }
+
+  /* ---------- Highlight the current day in the trip nav ---------- */
   var links = Array.prototype.slice.call(document.querySelectorAll('.daynav a'));
   var sections = links.map(function (a) {
     return document.getElementById(a.getAttribute('href').slice(1));
@@ -792,6 +1163,7 @@ footer .wrap { border-top: 2px dashed var(--line); padding-top: 1.25rem; }
   var ticking = false;
   function updateActive() {
     ticking = false;
+    if (currentTab() !== 'trip') return;
     var line = nav.offsetHeight + 24;
     var current = -1;
     sections.forEach(function (sec, i) {
@@ -809,8 +1181,9 @@ footer .wrap { border-top: 2px dashed var(--line); padding-top: 1.25rem; }
     if (!ticking) { ticking = true; requestAnimationFrame(updateActive); }
   }, { passive: true });
   window.addEventListener('resize', updateActive);
-  updateActive();
+  window.addEventListener('hashchange', route);
 
+  /* ---------- Address copy / map buttons ---------- */
   document.querySelectorAll('.addr').forEach(function (box) {
     var address = box.getAttribute('data-address');
     var actions = document.createElement('div');
@@ -825,11 +1198,6 @@ footer .wrap { border-top: 2px dashed var(--line); padding-top: 1.25rem; }
         copy.textContent = '已複製';
         setTimeout(function () { copy.textContent = '複製地址'; }, 1800);
       }
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(address).then(done, fallback);
-      } else {
-        fallback();
-      }
       function fallback() {
         var t = document.createElement('textarea');
         t.value = address;
@@ -839,6 +1207,11 @@ footer .wrap { border-top: 2px dashed var(--line); padding-top: 1.25rem; }
         t.select();
         try { document.execCommand('copy'); done(); } catch (e) {}
         document.body.removeChild(t);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(address).then(done, fallback);
+      } else {
+        fallback();
       }
     });
 
@@ -853,8 +1226,9 @@ footer .wrap { border-top: 2px dashed var(--line); padding-top: 1.25rem; }
     actions.appendChild(map);
     box.appendChild(actions);
   });
+
+  route();
 })();
 </script>
 </body>
 </html>
-
